@@ -62,18 +62,26 @@ document.addEventListener('DOMContentLoaded', () => {
         divSquare.addEventListener('dblclick', () => { 
             const divSquareId = parseInt(divSquare.id);
             // If divSquare is EVEN and there IS NOT a divSquare AFTER it, display alert() 
-            if(idCount % 2 === 0 && divSquare.nextElementSibling === null) {
-                alert(`I'm sorry, but there isn't a square after square #${divSquareId} to remove. Try again!`);
+            if(divSquareId % 2 === 0 &&  divSquare.nextElementSibling === null) {
+                alert(`I'm sorry, but there isn't a square after square #${divSquareId} to remove. Try again?`);
             // If divSquare is EVEN and there IS a divSquare AFTER it, remove()
-            } else if(idCount % 2 === 0 && idCount !== 0) {
-                divCol2.removeChild(divSquare.nextElementSibling);
+            } else if(divSquareId % 2 === 0 &&  divSquare.nextElementSibling !== null) {
+                const nextDivSquare = divSquare.nextElementSibling;
+                const nextDivSquareId = parseInt(nextDivSquare.id);
+                alert(`Even Stephen!`);
+                alert(`Goodbye, square #${nextDivSquareId}!`);
+                divCol2.removeChild(nextDivSquare);
             }
             // If clicked divSquare is ODD and there IS NOT another divSquare BEFORE it, display alert()
-            if(idCount % 2 !== 0 && divSquare.previousElementSibling === null) {
-                alert(`I'm sorry, but there isn't a square before square #${divSquareId} to remove. Try again!`);
+            if(divSquareId % 2 !== 0 && divSquare.previousSibling === null) {
+                alert(`I'm sorry, but there isn't a square before square #${divSquareId} to remove. Try again?`);
             // If clicked divSquare is ODD, remove()
-            } else if(idCount % 2 !== 0) {
-                divCol2.removeChild(divSquare.previousSibling);
+            } else if(divSquareId % 2 !== 0) {
+                const previousDivSquare = divSquare.previousSibling;
+                const previousDivSquareId = parseInt(previousDivSquare.id);
+                alert(`Well, isn't this odd?`);
+                alert(`Goodbye, square #${previousDivSquareId}`);
+                divCol2.removeChild(previousDivSquare);
             } 
         })
     };
