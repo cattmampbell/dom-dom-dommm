@@ -12,14 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const divContainer = createElement('div', 'header-container', body);
     const divRow1 = createElement('div', 'row', divContainer);
+    divRow1.id = 'row1';
     const divCol1 = createElement('div', 'col-12 text-center', divRow1);
+    divCol1.id = 'column1';
 
     const btn = createElement('button', 'btn col-4 btn-lg btn-outline-secondary px-2 py-2 mx-2 my-4', divCol1);
     const btnTxt = document.createTextNode('Add Square'); 
     btn.appendChild(btnTxt); 
 
     const divRow2 = createElement('div', 'row', divContainer);
+    divRow2.id = 'row2';
     const divCol2 = createElement('div', 'col-12', divRow2);
+    divCol2.id = 'column2';
 
     let idCount = 0; // Initializes idCount (number of squares on the page)
    
@@ -57,26 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // 'dblclick' event handler on divSquare
         divSquare.addEventListener('dblclick', () => { 
             const divSquareId = parseInt(divSquare.id);
-            const firstDivSquare = divCol2.firstElementChild;
-            const firstDivSquareId = parseInt(firstDivSquare.id);
-            const lastDivSquare = divCol2.lastElementChild;
-            const lastDivSquareId = parseInt(lastDivSquare.id);
-            const divSquareTotal = document.querySelectorAll('div-square').length;
-            if(divSquareId === 1 && divSquareId === firstDivSquareId && divSquareId === lastDivSquareId && divSquareId === divSquareTotal) {
-                alert(`There are no more squares, this is the only one! Click button to add more!`); 
-            } else if(divSquareId === 1 && divSquareId < divSquareTotal) {
-                alert(`Click the button to add more squares to the page!`);
-            } else if(divSquareId / 2 !== 0) { // Odd
-                const deletePreviousDivSquare = divSquare.previousElementSibling;
-                const deletePreviousDivSquareId = deletePreviousDivSquare.id;
-                alert(`Well, isn't this odd?`);
-            } else if(divSquareId > 1 && divSquareId !== firstDivSquareId && divSquareId !== lastDivSquareId && divSquareId > deletePreviousDivSquareId) {
-                alert(`Goodbye, ${deletePreviousDivSquareId}!`);
-            } else if(divSquareId % 2 == 0) { Even
-                alert(`This is even, I'd say!`);
-                const deleteNextDivSquare = divSquare.nextElementSibling;
-                const deleteNextDivSquareId = deleteNextDivSquare.id;
+            // If divSquare is EVEN and there IS NOT a divSquare AFTER it, display alert() 
+            if(idCount % 2 === 0 && divSquare.nextElementSibling === null) {
+                alert(`I'm sorry, but there isn't a square after square #${divSquareId} to remove. Try again!`);
+            // If divSquare is EVEN and there IS a divSquare AFTER it, remove()
+            } else if(idCount % 2 === 0 && idCount !== 0) {
+                divCol2.removeChild(divSquare.nextElementSibling);
             }
+            // If clicked divSquare is ODD and there IS NOT another divSquare BEFORE it, display alert()
+            if(idCount % 2 !== 0 && divSquare.previousElementSibling === null) {
+                alert(`I'm sorry, but there isn't a square before square #${divSquareId} to remove. Try again!`);
+            // If clicked divSquare is ODD, remove()
+            } else if(idCount % 2 !== 0) {
+                divCol2.removeChild(divSquare.previousSibling);
+            } 
         })
     };
 
